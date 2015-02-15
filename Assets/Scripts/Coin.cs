@@ -19,11 +19,19 @@ public class Coin : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, target.position, (speed * Time.deltaTime));
     }
 
+    /*void OnMouseDown()
+    {
+        if (!move)
+        {
+            EventManager.Instance.onCoinCollectedEvent();
+            move = true;
+        }
+    }
+    */
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            EventManager.Instance.onObjectCollectedEvent(ObjectType.COIN);
             Destroy(gameObject);
         }
     }

@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour
 {
-    public GameObject bulletPrefab;
-    
     public int health;
 
     public List<GameObject> itensToDrop;
@@ -18,7 +16,7 @@ public class Enemy : MonoBehaviour
 
         if (health <= 0)
         {
-            EventManager.Instance.onObjectDestroyedEvent(ObjectType.ENEMY, false);
+            EventManager.Instance.onEnemyDieEvent();
 
             for (int i = 0; i < itensToDrop.Count; i++)
             {
@@ -28,16 +26,7 @@ public class Enemy : MonoBehaviour
                 }
             }
 
-            gameObject.SetActive(false);
-
-            gameObject.GetComponent<ShowableObject>().StopAllCoroutines();
-
             Destroy(gameObject);
         }
-    }
-
-    public void Shoot()
-    {
-        Instantiate(bulletPrefab, transform.position, transform.rotation);
     }
 }

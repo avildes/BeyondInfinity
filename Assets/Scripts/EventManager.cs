@@ -17,20 +17,17 @@ public class EventManager : MonoBehaviour
     public delegate void RetryHandler();
     public static event RetryHandler onRetry;
 
-    public delegate void ObjectCollectedHandler(ObjectType type);
-    public static event ObjectCollectedHandler onObjectCollected;
+    public delegate void CoinCollectedHandler();
+    public static event CoinCollectedHandler onCoinCollected;
 
-    public delegate void ObjectDestoyedHandler(ObjectType type, bool timeout);
-    public static event ObjectDestoyedHandler onObjectDestroyed;
+    public delegate void EnemyHandler();
+    public static event EnemyHandler onEnemyDie;
 
     public delegate void LevelHandler();
     public static event LevelHandler onLevelReady;
 
     public delegate void PlayerHandler();
     public static event PlayerHandler onPlayerReady;
-
-    public delegate void PlayerDeathHandler();
-    public static event PlayerDeathHandler onPlayerDied;
     //----------------------------------------------------
 
     void Awake()
@@ -56,14 +53,16 @@ public class EventManager : MonoBehaviour
         onRetry();
     }
 
-    public void onObjectCollectedEvent(ObjectType type)
+    public void onCoinCollectedEvent()
     {
-        onObjectCollected(type);
+        Debug.Log("coin collected");
+        //onCoinCollected();
     }
-
-    public void onObjectDestroyedEvent(ObjectType type, bool timeout)
+    
+    public void onEnemyDieEvent()
     {
-        onObjectDestroyed(type, timeout);
+        Debug.Log("enemy destroyed");
+        //onEnemyDie();
     }
 
     public void onLevelReadyEvent()
@@ -74,10 +73,5 @@ public class EventManager : MonoBehaviour
     public void onPlayerReadyEvent()
     {
         onPlayerReady();
-    }
-
-    public void onPlayerDiedEvent()
-    {
-        onPlayerDied();
     }
 }
