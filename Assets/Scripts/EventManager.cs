@@ -23,6 +23,11 @@ public class EventManager : MonoBehaviour
     public delegate void EnemyHandler();
     public static event EnemyHandler onEnemyDie;
 
+    public delegate void LevelHandler();
+    public static event LevelHandler onLevelReady;
+
+    public delegate void PlayerHandler();
+    public static event PlayerHandler onPlayerReady;
     //----------------------------------------------------
 
     void Awake()
@@ -58,5 +63,15 @@ public class EventManager : MonoBehaviour
     {
         Debug.Log("enemy destroyed");
         //onEnemyDie();
+    }
+
+    public void onLevelReadyEvent()
+    {
+        onLevelReady();
+    }
+
+    public void onPlayerReadyEvent()
+    {
+        onPlayerReady();
     }
 }
