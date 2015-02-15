@@ -5,17 +5,17 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{67CD20CD-6048-6333-C6C8-9D705DEC7036}</ProjectGuid>
+    <ProjectGuid>{0BF1A7A7-BE43-B781-65F7-60133BE24F2E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace></RootNamespace>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityProjectType>Editor:5</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>4.6.2f1</UnityVersion>
   </PropertyGroup>
@@ -52,13 +52,30 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\UnityAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>Assets\UnityVS\Editor\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Messaging">
+      <HintPath>Assets\UnityVS\Editor\SyntaxTree.VisualStudio.Unity.Messaging.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityVS.VersionSpecific">
+      <HintPath>Assets\UnityVS\Editor\UnityVS.VersionSpecific.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Coin.cs" />
-    <Compile Include="Assets\Scripts\Enemy.cs" />
-    <Compile Include="Assets\Scripts\EventManager.cs" />
-    <Compile Include="Assets\Scripts\Level.cs" />
-    <Compile Include="Assets\Scripts\LevelObject.cs" />
+    <ProjectReference Include="UnityVS.BeyondInfinity.CSharp.csproj">
+      <Project>{67CD20CD-6048-6333-C6C8-9D705DEC7036}</Project>
+      <Name>UnityVS.BeyondInfinity.CSharp</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Editor\LevelObjectDrawer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>

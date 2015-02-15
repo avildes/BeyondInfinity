@@ -5,9 +5,7 @@ using System.Collections.Generic;
 public class Level : MonoBehaviour
 {
 
-    public List<GameObject> objects;
-
-    public List<GameObject> quantities;
+    public List<LevelObject> objects;
 
     // Use this for initialization
 	void Start () {
