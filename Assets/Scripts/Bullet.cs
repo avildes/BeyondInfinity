@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Coin : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
     public float speed;
 
     private bool move;
 
     private Transform target;
+
+    public int damage;
 
     void Start()
     {
@@ -23,7 +25,7 @@ public class Coin : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            EventManager.Instance.onObjectCollectedEvent(ObjectType.COIN);
+            target.gameObject.GetComponent<Player>().DamagePlayer(damage);
             Destroy(gameObject);
         }
     }
