@@ -6,9 +6,7 @@ public class Ore : MonoBehaviour
 {
     public int health;
 
-    public List<GameObject> itensToDrop;
-
-    public List<int> quantities;
+    public GameObject itemToDrop;
 
     void OnMouseDown()
     {
@@ -18,13 +16,7 @@ public class Ore : MonoBehaviour
         {
             EventManager.Instance.onObjectDestroyedEvent(ObjectType.ORE, false);
 
-            for (int i = 0; i < itensToDrop.Count; i++)
-            {
-                for (int j = 0; j < quantities[i]; j++)
-                {
-                    Instantiate(itensToDrop[i], transform.position, transform.rotation);
-                }
-            }
+            Instantiate(itemToDrop, transform.position, transform.rotation);
 
             gameObject.SetActive(false);
 
