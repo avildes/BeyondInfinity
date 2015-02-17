@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
     public List<Level> levels;
 
     private Hashtable achievedObjectives;
+    private Dictionary<string, int> statistics;
 
     private int actualLevel;
 
@@ -33,6 +34,8 @@ public class LevelManager : MonoBehaviour
         actualLevel = -1;
 
         achievedObjectives = new Hashtable();
+        
+        statistics = new Dictionary<string, int>();
 
         CreateNextLevel();
     }
@@ -104,6 +107,7 @@ public class LevelManager : MonoBehaviour
             position.z += 11;
             transform.position = position;
 
+            
             ///Instancia cada objeto do levelObject em uma das posicoes do grid
             foreach (LevelObject levelObject in levels[actualLevel].objects)
             {
@@ -127,7 +131,21 @@ public class LevelManager : MonoBehaviour
             EventManager.Instance.onLevelReadyEvent();
         }
     }
+    /*
+    private void ClearRotations()
+    {
+        Transform tile;
 
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            for (int j = 0; j < transform.GetChild(0).childCount; j++)
+            {
+                tile = transform.GetChild(i).GetChild(j).GetChild(0);
+                tile.rotation = Quaternion.identity;
+            }
+        }
+    }
+    */
     private void CheckObjectCount()
     {
         objectCount--;
@@ -166,6 +184,8 @@ public class LevelManager : MonoBehaviour
             }
         }
 
+        StartCoroutine(SaveStatistics());
+
         Debug.Log("stars: " + stars);
     }
 
@@ -175,6 +195,8 @@ public class LevelManager : MonoBehaviour
 
     private void onObjectCollected(ObjectType type)
     {
+        string key = type.ToString();
+
         if (achievedObjectives.ContainsKey(type))
         {
             int qtd = (int)achievedObjectives[type];
@@ -185,27 +207,17 @@ public class LevelManager : MonoBehaviour
         {
             achievedObjectives.Add(type, 1);
         }
+
+        IncrementValueStatistics(key);
     }
 
     private void onObjectDestroyed(ObjectType type, bool timeout)
     {
-        // TODO save to statistics
+        string key = type.ToString();
         
         if (timeout)
         {
-
-            string key = type.ToString() + "missed";
-
-            if (achievedObjectives.ContainsKey(key))
-            {
-                int qtd = (int)achievedObjectives[key];
-                qtd++;
-                achievedObjectives[type] = qtd;
-            }
-            else
-            {
-                achievedObjectives.Add(key, 1);
-            }
+            key += "Missed";
         }
         else
         {
@@ -221,6 +233,7 @@ public class LevelManager : MonoBehaviour
             }
         }
 
+        IncrementValueStatistics(key);
         CheckObjectCount();
     }
 
@@ -232,7 +245,27 @@ public class LevelManager : MonoBehaviour
 
     #region Statistics
 
+    private IEnumerator SaveStatistics()
+    {
+        foreach (KeyValuePair<string, int> entry in statistics)
+        {
+            PersistenceHelper.Instance.SaveIntToPlayerPrefs(entry.Key, entry.Value);
+        }
 
+        yield return new WaitForEndOfFrame();
+    }
+
+    private void IncrementValueStatistics(string key)
+    {
+        if(statistics.ContainsKey(key))
+        {
+            statistics[key] += 1;
+        }
+        else
+        {
+            statistics.Add(key, 1);
+        }
+    }
 
     #endregion
 }

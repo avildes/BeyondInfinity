@@ -19,6 +19,8 @@ public class ShowableObject : MonoBehaviour
 
     private Vector3 targetAngles;
 
+    private int appearanceCounter;
+
     public void SetAppearanceSpeed(float value)
     {
         appearanceSpeed = value;
@@ -40,10 +42,14 @@ public class ShowableObject : MonoBehaviour
 
         EventManager.onPlayerReady += ShowObject;
         EventManager.onPlayerDied += PlayerDied;
+
+        appearanceCounter = 0;
     }
 
     void OnDestroy()
     {
+        transform.parent.rotation = Quaternion.identity;
+
         EventManager.onPlayerReady -= ShowObject;
         EventManager.onPlayerDied -= PlayerDied;
     }
@@ -57,6 +63,14 @@ public class ShowableObject : MonoBehaviour
 
     void ShowObject()
     {
+        if(appearanceCounter == quantityOfAppearances)
+        {
+            EventManager.Instance.onObjectDestroyedEvent(ObjectType.ENEMY, true);
+
+            Destroy(gameObject);
+        }
+        
+        appearanceCounter++;
 
         //Rotate
         /*

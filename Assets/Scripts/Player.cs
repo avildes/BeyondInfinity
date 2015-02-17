@@ -22,8 +22,6 @@ public class Player : MonoBehaviour
     {
         alive = true;
 
-        move = false;
-
         EventManager.onLevelReady += movePlayer;
 
         health = maxHealth;
@@ -51,10 +49,9 @@ public class Player : MonoBehaviour
 
     public void movePlayer()
     {
-        move = true;
-
         target = transform.position;
         target.z += distanceToMove;
+        move = true;
     }
 
     public void DamagePlayer(int damage)

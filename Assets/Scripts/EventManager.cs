@@ -68,7 +68,10 @@ public class EventManager : MonoBehaviour
 
     public void onLevelReadyEvent()
     {
-        onLevelReady();
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().movePlayer();
+        Debug.Log(onLevelReady);
+        //onLevelReady();
+
     }
 
     public void onPlayerReadyEvent()
