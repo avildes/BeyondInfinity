@@ -65,7 +65,14 @@ public class ShowableObject : MonoBehaviour
     {
         if(appearanceCounter == quantityOfAppearances)
         {
-            EventManager.Instance.onObjectDestroyedEvent(ObjectType.ENEMY, true);
+            ObjectType type = ObjectType.ORE;
+
+            if(gameObject.GetComponent<Enemy>())
+            {
+                type = ObjectType.ENEMY;
+            }
+
+            EventManager.Instance.onObjectDestroyedEvent(type, true);
 
             Destroy(gameObject);
         }

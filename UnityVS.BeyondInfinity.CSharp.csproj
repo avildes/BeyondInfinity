@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\LevelObject.cs" />
     <Compile Include="Assets\Scripts\LevelObjective.cs" />
     <Compile Include="Assets\Scripts\ObjectType.cs" />
+    <Compile Include="Assets\Scripts\Ore.cs" />
     <Compile Include="Assets\Scripts\PersistenceHelper.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\ShowableObject.cs" />

@@ -2,7 +2,6 @@
 {
     ENEMY,
     TRAP,
-    ROCK,
     ORE,
     COIN
 }
