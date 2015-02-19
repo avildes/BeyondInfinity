@@ -2,8 +2,10 @@
 using System.IO;
 
 [System.Serializable]
-public class LevelObjective
+public class PhaseObjective
 {
+    public string name;
+
     public ObjectType type;
 
     public int quantity;

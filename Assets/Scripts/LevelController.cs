@@ -2,9 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class LevelManager : MonoBehaviour
+public class LevelController : MonoBehaviour
 {
-    public List<LevelObjective> phaseObjectives;
+    public GameObject scoreManager;
+
+    public GameObject scoreScreen;
+
+    public int phase;
 
     public List<Level> levels;
 
@@ -20,22 +24,48 @@ public class LevelManager : MonoBehaviour
 
     private int objectCount;
 
+    private Phase actualPhase;
+
+    private Vector3 initialPosition;
+
+    private GameObject player;
+
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        if (PhaseManager.Instance == null) Debug.Log("Error: PhaseManager needs to be in the scene");
+
+        actualPhase = PhaseManager.Instance.GetPhase(phase);
+
         EventManager.onObjectDestroyed += onObjectDestroyed;
         EventManager.onPlayerDied += onPlayerDie;
         EventManager.onObjectCollected += onObjectCollected;
+        EventManager.onRetry += RestartGame;
+
+        initialPosition = transform.position;
+
+        StartGame();
+    }
+
+    void RestartGame()
+    {
+        player.GetComponent<Player>().ResetPlayer();
 
         StartGame();
     }
 
     void StartGame()
     {
+        scoreScreen.SetActive(false);
+
         actualLevel = -1;
 
         achievedObjectives = new Hashtable();
         
         statistics = new Dictionary<string, int>();
+
+        transform.position = initialPosition;
 
         CreateNextLevel();
     }
@@ -45,6 +75,7 @@ public class LevelManager : MonoBehaviour
         EventManager.onObjectDestroyed -= onObjectDestroyed;
         EventManager.onPlayerDied -= onPlayerDie;
         EventManager.onObjectCollected -= onObjectCollected;
+        EventManager.onRetry -= RestartGame;
     }
 
     #region utils - random
@@ -131,21 +162,6 @@ public class LevelManager : MonoBehaviour
             EventManager.Instance.onLevelReadyEvent();
         }
     }
-    /*
-    private void ClearRotations()
-    {
-        Transform tile;
-
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            for (int j = 0; j < transform.GetChild(0).childCount; j++)
-            {
-                tile = transform.GetChild(i).GetChild(j).GetChild(0);
-                tile.rotation = Quaternion.identity;
-            }
-        }
-    }
-    */
     private void CheckObjectCount()
     {
         objectCount--;
@@ -166,29 +182,55 @@ public class LevelManager : MonoBehaviour
     {
         int stars = 0;
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        
+        bool objective1Cleared = false, objective2Cleared = false;
+
+        // check if life is full
+
         if(player.GetComponent<Player>().IsHealthFull())
         {
             stars++;
         }
 
-        foreach (LevelObjective objective in phaseObjectives)
+        // check objective 1
+
+        if (achievedObjectives.ContainsKey(actualPhase.objective1.type))
         {
-            if (achievedObjectives.ContainsKey(objective.type))
+            if (actualPhase.objective1.quantity <= (int)achievedObjectives[actualPhase.objective1.type])
             {
-                if(objective.quantity <= (int) achievedObjectives[objective.type])
-                {
-                    stars++;
-                }
+                stars++;
+                objective1Cleared = true;
             }
+        }
+
+        // check objective 2
+
+        if (achievedObjectives.ContainsKey(actualPhase.objective2.type))
+        {
+            if (actualPhase.objective2.quantity <= (int)achievedObjectives[actualPhase.objective2.type])
+            {
+                stars++;
+                objective2Cleared = true;
+            }
+        }
+
+        int wallet = PersistenceHelper.Instance.GetIntPlayerPrefs("wallet");
+
+        // put coins on the wallet
+        if ((achievedObjectives.ContainsKey(ObjectType.COIN)))
+        {
+            wallet += (int) achievedObjectives[ObjectType.COIN];
+            PersistenceHelper.Instance.SaveIntToPlayerPrefs("wallet", wallet);
         }
 
         StartCoroutine(SaveStatistics());
 
-        Debug.Log("stars: " + stars);
+        // show score screen
+        ScoreManager sm = scoreManager.GetComponent<ScoreManager>();
+
+        sm.ShowScore(stars, wallet, objective1Cleared, objective2Cleared, achievedObjectives, actualPhase);
     }
 
+  
     #endregion
 
     #region event listeners

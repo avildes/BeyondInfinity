@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
-
     public int maxHealth;
 
     private int health;
@@ -18,13 +17,25 @@ public class Player : MonoBehaviour
 
     private bool alive;
 
+    private Vector3 initialPosition;
+
     void Start()
     {
-        alive = true;
+        initialPosition = transform.localPosition;
 
         EventManager.onLevelReady += movePlayer;
 
+        alive = true;
         health = maxHealth;
+    }
+
+    public void ResetPlayer()
+    {
+        alive = true;
+        health = maxHealth;
+        transform.position = initialPosition;
+
+        
     }
 
     void OnDestroy()
@@ -63,6 +74,9 @@ public class Player : MonoBehaviour
             if (this.health <= 0)
             {
                 EventManager.Instance.onPlayerDiedEvent();
+
+                Debug.Log("player died");
+
                 alive = false;
             }
         }

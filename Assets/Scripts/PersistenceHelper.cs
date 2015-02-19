@@ -20,6 +20,9 @@ public class PersistenceHelper : MonoBehaviour
 
     public int GetIntPlayerPrefs(string key)
     {
-        return PlayerPrefs.GetInt(key);
+        if (PlayerPrefs.HasKey(key))
+            return PlayerPrefs.GetInt(key);
+        else
+            return 0;
     }
 }
