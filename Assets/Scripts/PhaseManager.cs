@@ -4,14 +4,22 @@ using System.Collections.Generic;
 
 public class PhaseManager : MonoBehaviour
 {
-    public List<Phase> phaseList;
-
     public static PhaseManager Instance;
+
+    public List<Phase> phaseList;
 
 	public Phase GetPhase(int value)
     {
-        return phaseList[value];
+        if (phaseList.Count > value)
+            return phaseList[value];
+        else
+            return null;
 	}
+
+    public List<Phase> GetPhaseList()
+    {
+        return phaseList;
+    }
 
     void Awake()
     {

@@ -227,7 +227,7 @@ public class LevelController : MonoBehaviour
         // show score screen
         ScoreManager sm = scoreManager.GetComponent<ScoreManager>();
 
-        sm.ShowScore(stars, wallet, objective1Cleared, objective2Cleared, achievedObjectives, actualPhase);
+        sm.ShowScore(stars, wallet, objective1Cleared, objective2Cleared, achievedObjectives, actualPhase, phase);
     }
 
   

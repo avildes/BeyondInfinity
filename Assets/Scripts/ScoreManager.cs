@@ -24,6 +24,8 @@ public class ScoreManager : MonoBehaviour
 
     private Phase phase;
 
+    private int phaseNumber;
+
     #region Buttons
 
     public void Retry()
@@ -33,7 +35,16 @@ public class ScoreManager : MonoBehaviour
 
     public void NextLevel()
     {
+        Phase nextPhase = PhaseManager.Instance.GetPhase(phaseNumber + 1);
 
+        if(nextPhase != null)
+        {
+            Application.LoadLevel(nextPhase.name);
+        }
+        else
+        {
+            BackToMap();
+        }
     }
 
     public void BackToMap()
@@ -43,10 +54,11 @@ public class ScoreManager : MonoBehaviour
 
     #endregion
 
-    public void ShowScore(int stars, int wallet, bool objective1Cleared, bool objective2Cleared, Hashtable achievedObjectives, Phase actualPhase)
+    public void ShowScore(int stars, int wallet, bool objective1Cleared, bool objective2Cleared, Hashtable achievedObjectives, Phase actualPhase, int phaseNumber)
     {
         this.achievedObjectives = achievedObjectives;
         this.phase = actualPhase;
+        this.phaseNumber = phaseNumber;
 
         StartCoroutine(ShowScore(stars, wallet, objective1Cleared, objective2Cleared));
     }

@@ -54,21 +54,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Bullet.cs" />
-    <Compile Include="Assets\Scripts\Coin.cs" />
-    <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\EventManager.cs" />
-    <Compile Include="Assets\Scripts\Level.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\Bullet.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\Coin.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\Enemy.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\Level.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\LevelObject.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\Mission.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\ObjectType.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\Ore.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\Phase.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\Player.cs" />
     <Compile Include="Assets\Scripts\LevelController.cs" />
-    <Compile Include="Assets\Scripts\LevelObject.cs" />
-    <Compile Include="Assets\Scripts\Mission.cs" />
-    <Compile Include="Assets\Scripts\ObjectType.cs" />
-    <Compile Include="Assets\Scripts\Ore.cs" />
+    <Compile Include="Assets\Scripts\Menu\BackButtonBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Menu\ListItemBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Menu\MapBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Menu\ObjectivesScreen.cs" />
+    <Compile Include="Assets\Scripts\Menu\SplashBehaviour.cs" />
     <Compile Include="Assets\Scripts\PersistenceHelper.cs" />
-    <Compile Include="Assets\Scripts\Phase.cs" />
     <Compile Include="Assets\Scripts\PhaseManager.cs" />
     <Compile Include="Assets\Scripts\PhaseObjective.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\ShowableObject.cs" />
   </ItemGroup>
